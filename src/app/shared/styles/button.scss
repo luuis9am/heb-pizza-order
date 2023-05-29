@@ -1,0 +1,47 @@
+$dark-blue: #00439D;
+$primary-blue: #0072CE;
+$light-blue: #4886bf;
+
+$black: #000000;
+$dark-gray: #666666;
+$charcoal: #444444;
+$light-grey: #DDDDDD;
+$white: #ffffff;
+
+$warn-red: #E30526;
+$dark-red: #C8000F;
+
+/* Block component */
+.btn {
+  border: none;
+  cursor: pointer;
+}
+
+.btn__large {
+  font-size: large;
+  line-height: 30px;
+  padding: 10px 30px;
+  margin: 10px 10px;
+}
+.btn__medium {
+  font-size: 14px;
+  margin: 2px auto;
+}
+
+.btn--primary-blue {
+  background-color: #4169E1;
+  color: white;
+}
+.btn--primary-blue[disabled] {
+  color: $light-grey;
+  background-color: white;
+  border: 1px solid $dark-gray;
+}
+.btn--gray {
+  background-color: white;
+  color: $dark-gray;
+}
+.btn--red {
+  color: white;
+  background-color: #DC143C;
+}

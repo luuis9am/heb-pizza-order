@@ -1,0 +1,54 @@
+@import '../shared/styles/button';
+
+mat-form-field {
+  font-size: 14px;
+}
+
+.order-page-container {
+  height: 100%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: $charcoal;
+}
+
+.center-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  border-radius: 24px;
+  width: 560px;
+  max-height: 640px;
+}
+
+.mat-card {
+  max-width: 800px;
+  max-height: 400px;
+  min-width: 200px;
+  min-height: 150px;
+}
+.card-content {
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+// fields
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.input-field {
+  justify-content: space-between;
+  width: 280px;
+  font-size: 14px;
+}

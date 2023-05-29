@@ -1,0 +1,83 @@
+<div class="order-page-container">
+  <div class="card-content-columns">
+    <mat-card class="card-2">
+      <mat-card-header>
+        <h1>Placed Orders</h1>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="row-border">
+
+          <mat-form-field>
+            <mat-label>Filter By Order Details</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Pepperoni" #input>
+          </mat-form-field>
+
+          <table mat-table [dataSource]="dataSource" matSort>
+            <caption></caption>
+
+            <ng-container matColumnDef="Timestamp" sticky>
+              <th *matHeaderCellDef id="Timestamp" mat-header-cell mat-sort-header>
+                Time
+              </th>
+              <td *matCellDef="let element" mat-cell>{{ formatTimestamp(element.Timestamp) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Crust">
+              <th *matHeaderCellDef id="Crust" mat-header-cell mat-sort-header>
+                Crust
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Crust}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Flavor">
+              <th *matHeaderCellDef id="Flavor" mat-header-cell mat-sort-header>
+                Flavor
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Flavor}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Size">
+              <th *matHeaderCellDef id="Size" mat-header-cell mat-sort-header>
+                Size
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Size}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Table_No">
+              <th *matHeaderCellDef id="Table_No" mat-header-cell mat-sort-header="">
+                Table
+              </th>
+              <td *matCellDef="let element" mat-cell> {{ element.Table_No.toString() }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delete">
+              <th *matHeaderCellDef id="Delete" mat-header-cell mat-sort-header>
+                Delete
+              </th>
+              <td *matCellDef="let element" mat-cell>
+                <div>
+                  <button (click)="deleteOrder(element.Order_ID)"
+                          class="btn btn__icon btn--icon-primary-gray"
+                          mat-icon-button matTooltip="Delete Order">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of orders"></mat-paginator>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

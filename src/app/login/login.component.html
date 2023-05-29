@@ -1,22 +1,28 @@
+<div class="order-page-container">
+<mat-card class="center-card" xmlns="http://www.w3.org/1999/html">
+  <mat-card-content class="card-content">
 
-<mat-card>
-  <mat-card-content>
-  <form [formGroup]="loginFormGroup">
-    <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" placeholder="Username">
-        <mat-error>Invalid Username</mat-error>
-      </mat-form-field>
+    <div class="mat-h1">Pizza Ordering Application</div>
+    <br>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput formControlName="password" placeholder="Password" type="password">
-      <mat-error>Invalid Password</mat-error>
-    </mat-form-field>
+    <form [formGroup]="loginFormGroup">
+      <div class="input-container">
+        <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Username">
+          <mat-error>Invalid Username</mat-error>
+        </mat-form-field>
 
-    <button (click)="submitLoginForm(loginFormGroup)" [disabled]="loginFormGroup.invalid">
-      Login
-    </button>
-  </form>
+        <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" placeholder="Password" type="password">
+          <mat-error>Invalid Password</mat-error>
+        </mat-form-field>
+
+        <button (click)="submitLoginForm(loginFormGroup)" [disabled]="loginFormGroup.invalid"
+                class="btn btn__large btn--primary-blue mat-raised-button">Login</button>
+      </div>
+    </form>
   </mat-card-content>
 </mat-card>
+</div>

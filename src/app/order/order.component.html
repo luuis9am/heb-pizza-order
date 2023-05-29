@@ -1,1 +1,136 @@
-<p>order works!</p>
+<div class="order-page-container">
+  <div class="card-content-columns">
+    <form [formGroup]="orderFormGroup">
+      <mat-card>
+        <mat-card-header>
+          <h1>
+            <mat-icon class="btn btn__icon btn--icon-red">local_pizza</mat-icon>
+            Pizza Builder
+          </h1>
+        </mat-card-header>
+
+        <mat-card-content class="card-1">
+
+          <div class="row-border">
+            <h2>Table Number</h2>
+            <mat-form-field appearance="outline" style="width:100%">
+              <mat-label>Select a Table</mat-label>
+              <mat-select formControlName="Table_No" required>
+                <mat-option *ngFor="let selectedTable of tables" [value]="selectedTable">
+                  {{selectedTable}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row-border">
+            <h2>Size</h2>
+            <mat-radio-group formControlName="Size" required>
+              <mat-radio-button *ngFor="let selectedSize of sizes"
+                                [value]="selectedSize" class="radio-button">
+                {{selectedSize}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row-border">
+            <h2>Flavor</h2>
+            <mat-radio-group formControlName="Flavor" required>
+              <mat-radio-button *ngFor="let selectedFlavor of flavors"
+                                [value]="selectedFlavor" class="radio-button">
+                {{selectedFlavor}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row-border">
+            <h2>Crust</h2>
+            <mat-radio-group formControlName="Crust" required>
+              <mat-radio-button *ngFor="let selectedCrust of crustType"
+                                [value]="selectedCrust" class="radio-button">
+                {{selectedCrust}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="btn-set">
+            <button (click)="addPizzaToCurrentOrder(orderFormGroup.value)"
+                    [disabled]="orderFormGroup.invalid"
+                    class="btn btn__large btn--primary-blue">Add to Order
+            </button>
+            <button (click)="resetOrderForm()" class="btn btn__large btn--secondary-white">Reset Selection</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+
+    <mat-card class="card-2">
+      <mat-card-header>
+        <h1>Current Pizza Requests</h1>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="card-2-content">
+          <table [dataSource]="dataSource" mat-table class="row-border" >
+            <caption></caption>
+
+            <ng-container matColumnDef="Table_No">
+              <th *matHeaderCellDef id="Table_No" mat-header-cell>
+                Table
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Table_No}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Size">
+              <th *matHeaderCellDef id="Size" mat-header-cell>
+                Size
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Size}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Flavor">
+              <th *matHeaderCellDef id="Flavor" mat-header-cell>
+                Flavor
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Flavor}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Crust">
+              <th *matHeaderCellDef id="Crust" mat-header-cell>
+                Crust
+              </th>
+              <td *matCellDef="let element" mat-cell>{{element.Crust}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delete">
+              <th *matHeaderCellDef id="Delete" mat-header-cell>
+                Delete
+              </th>
+              <td *matCellDef="let element" mat-cell>
+                <div>
+                  <button (click)="removePizzaFromCurrentOrder(element)"
+                          class="btn btn__icon btn--icon-primary-gray"
+                          mat-icon-button matTooltip="Cancel Order">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+          </table>
+          <div class="btn-set">
+            <button (click)="submitOrders(dataSource.data)"
+                    class="btn btn__large btn--primary-blue">Submit Order
+            </button>
+            <button (click)="clearOrders()"
+                    class="btn btn__large btn--red">Cancel Order
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+</div>
