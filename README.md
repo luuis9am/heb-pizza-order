@@ -8,7 +8,7 @@
 *** Thanks again! Now go create something AMAZING! :D
 -->
 
-<h3 align="center">Pizza-POrder-roject</h3>
+<h3 align="center">Pizza-Order-Project</h3>
 
   <p align="center">
     Application allows users to configure, place and view pizza orders
