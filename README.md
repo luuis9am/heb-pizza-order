@@ -89,11 +89,11 @@ Projects makes use of prebuilt apis to gain authorization token, submit-orders, 
 ## Usage
 
 ### Login Page
-Upon accessing aplication you are directed to the login-page. Here you are able to submit login credentials to obtain a token that will be housed in localstorage. With the token you are then able to then use order-page features. Successful login is greeted with a snackbar message with a welcome message. Unsuccessful login is shown with an error snackbar.
+Upon accessing aplication you are directed to the login-page. Here you are able to submit login credentials to obtain a token that will be utilized when using the order-page features. Successful login is greeted with a snackbar message with a welcome message and redirection to the orders page. Unsuccessful login is shown with an error snackbar.
 
 
 ### Place Order Page
-On order you are able to configure and submit a new pizza order, view current orders, and delete an existing order. In order to use a token is required via successful login.
+On the order-page you are able to configure and submit a new pizza order. In order to use a token is required via successful login.
 - Pizza Order submition are required to have a crust, flavor, size and table number selected. Upons submittance the order becomes viewable on the 'My Orders' table.
 - My Orders table reflects current orders on page-load and is able to delete specific orders via usage of the delete button icon.
 
