@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ApiEndpoints} from "../shared/constants/api-endpoints";
 import {Observable} from "rxjs";
@@ -12,12 +12,6 @@ export class OrderService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  setHttpHeader(): HttpHeaders {
-    return new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('accept', '*/*');
-  }
-
   getOrders(): Observable<PlacedPizzaOrder[]> {
     const orderUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.orders;
     return this.httpClient.get<PlacedPizzaOrder[]>(orderUrl);
@@ -25,7 +19,7 @@ export class OrderService {
 
   postOrder(orderForm: any): Observable<any> {
     const postOrderUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.orders;
-    return this.httpClient.post<any>(postOrderUrl,orderForm, {'headers': this.setHttpHeader()});
+    return this.httpClient.post<any>(postOrderUrl,orderForm);
   }
 
   deleteOrder(orderID: number): Observable<any> {
