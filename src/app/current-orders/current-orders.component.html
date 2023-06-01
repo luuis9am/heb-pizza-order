@@ -10,7 +10,7 @@
 
           <mat-form-field>
             <mat-label>Filter By Order Details</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Pepperoni" #input>
+            <input matInput (keyup)="applyFilter(input.value)" placeholder="Pepperoni" #input>
           </mat-form-field>
 
           <table mat-table [dataSource]="dataSource" matSort>

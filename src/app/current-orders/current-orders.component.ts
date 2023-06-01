@@ -63,12 +63,22 @@ export class CurrentOrdersComponent  implements OnInit {
     return formattedDate || '';
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.toString().trim().toLowerCase();
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filterPredicate = (placedPizzaOrder: PlacedPizzaOrder, filter: string) => {
+      const formattedDate = this.formatTimestamp(placedPizzaOrder.Timestamp).toLowerCase();
+      return placedPizzaOrder.Crust.toLowerCase().includes(filter)
+        || placedPizzaOrder.Flavor.toLowerCase().includes(filter)
+        || placedPizzaOrder.Size.toLowerCase().includes(filter)
+        || placedPizzaOrder.Table_No.toString().includes(filter)
+        || formattedDate.includes(filter);
+    };
+
+    this.dataSource.filter = filterValue;
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+
 }
