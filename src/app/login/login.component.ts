@@ -11,16 +11,14 @@ import {SnackbarService} from "../shared/services/snackbar.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  userNameInput: String = '';
-  userPasswordInput: String = '';
 
   loginFormGroup = this.formBuilder.group({
-    username: [this.userNameInput, [
+    username: ['', [
       Validators.required,
       Validators.minLength(3),
       Validators.pattern('^[a-zA-Z0-9_]*$')
     ]],
-    password: [this.userPasswordInput, [
+    password: ['', [
       Validators.required,
       Validators.minLength(3),
       Validators.pattern('^[a-zA-Z0-9_]*$')
@@ -33,17 +31,18 @@ export class LoginComponent {
               private authService: AuthService) {
   }
 
-  async submitLoginForm(loginFormValue: FormGroup): Promise<void> {
-    await this.authService.requestToken(loginFormValue.value)
-      .then((userToken: UserToken) => {
+  submitLoginForm(loginFormValue: FormGroup): void {
+    this.authService.requestToken(loginFormValue.value).subscribe(
+      (userToken: UserToken) => {
         localStorage.setItem('userToken', <string>userToken.access_token);
         this.snackbarService.openSuccessSnackBar('Successful login',
           "Welcome, " + loginFormValue.value.username)
         this.router.navigate(['order']).then();
-      })
-      .catch((error: any) => {
+      },
+      (error: any) => {
         console.error(error);
         this.snackbarService.openErrorSnackBar('Invalid Credentials', error.error.msg)
-      })
+      }
+    );
   }
 }
