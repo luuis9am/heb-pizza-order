@@ -27,32 +27,33 @@ export class CurrentOrdersComponent  implements OnInit {
               private datePipe: DatePipe) {
   }
 
-  async ngOnInit(): Promise<void> {
-    await this.fillOrdersTable().then();
+  ngOnInit(): void {
+    this.fillOrdersTable();
   }
 
-  async fillOrdersTable(): Promise<any> {
-    await this.orderService.getOrders()
-      .then((currentPizzaOrders: PlacedPizzaOrder[]) => {
+  fillOrdersTable(): void {
+    this.orderService.getOrders().subscribe(
+      (currentPizzaOrders: PlacedPizzaOrder[]) => {
         this.dataSource = new MatTableDataSource(currentPizzaOrders);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-      })
-      .catch(error => {
-        console.error(error.error);
-        this.snackbarService.openErrorSnackBar('Issue in Obtaining Orders', '')
-      })
+      },
+      error => {
+        console.error(error);
+        this.snackbarService.openErrorSnackBar('Issue in Obtaining Orders', '');
+      }
+    );
   }
 
   deleteOrder(orderID: number) {
-    this.orderService.deleteOrder(orderID)
-      .then(async () => {
+    this.orderService.deleteOrder(orderID).subscribe(
+      () => {
         this.snackbarService.openSuccessSnackBar('Deleted Successfully', '')
-        await this.fillOrdersTable().then();
-      })
-      .catch((error) => {
+        this.fillOrdersTable();
+      },
+      error => {
           console.error(error);
-          this.snackbarService.openErrorSnackBar('Issue in Submitting Order', error.error.msg)
+          this.snackbarService.openErrorSnackBar('Issue in Deleting Order', '')
         }
       )
   }

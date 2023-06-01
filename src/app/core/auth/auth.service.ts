@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {ApiEndpoints} from "../../shared/constants/api-endpoints";
 import {environment} from "../../../environments/environment";
 import {UserCredentials} from "../../shared/models/user-credentials.model";
@@ -21,12 +21,7 @@ export class AuthService {
   authenticateUser(userLoginForm: UserCredentials): Observable<any> {
     const loginUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.auth;
     return this.httpClient.post<any>(loginUrl, userLoginForm,
-      {'headers': this.setLoginHeader()}).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error(error);
-        return throwError(error);
-      })
-    );
+      {'headers': this.setLoginHeader()});
   }
 
   requestToken(loginFormValue: UserCredentials): Observable<any> {

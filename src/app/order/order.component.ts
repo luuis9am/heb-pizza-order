@@ -8,6 +8,7 @@ import {
 import {SnackbarService} from "../shared/services/snackbar.service";
 import {Constants} from "../shared/constants/constants";
 import {NewPizzaOrder} from "../shared/models/pizza-order.model";
+import {concatMap, from} from "rxjs";
 
 @Component({
   selector: 'app-order',
@@ -45,19 +46,22 @@ export class OrderComponent implements OnInit {
     this.dataSource = new MatTableDataSource<NewPizzaOrder>(this.pizzaOrderList);
   }
 
-  async submitOrders(pizzaOrders: NewPizzaOrder[]): Promise<void> {
+  submitOrders(pizzaOrders: NewPizzaOrder[]): void {
     if (this.dataSource.data.length > 0) {
       if (this.validateDuplicates(pizzaOrders)) {
-        try {
-          for (let pizza of pizzaOrders) {
-            await this.orderService.postOrder(pizza).then();
-          }
-          this.clearOrders();
-          this.snackbarService.openSuccessSnackBar('Order(s) Submitted Successfully', '');
-        } catch (error) {
-          console.error(error);
-          this.snackbarService.openErrorSnackBar('Error in submitting ', '');
-        }
+        from(pizzaOrders).pipe(
+          concatMap(pizza => this.orderService.postOrder(pizza)),
+        ).subscribe({
+          next: () => {},
+          error: error => {
+            console.error(error);
+            this.snackbarService.openErrorSnackBar('Error in submitting ', '');
+          },
+          complete: () => {
+            this.clearOrders();
+            this.snackbarService.openSuccessSnackBar('Order(s) Submitted Successfully', '');
+          },
+        });
       } else {
         this.snackbarService.openErrorSnackBar('House rules, no duplicate pizza requests', '');
       }

@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ApiEndpoints} from "../shared/constants/api-endpoints";
+import {Observable} from "rxjs";
+import {PlacedPizzaOrder} from "../shared/models/pizza-order.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,20 +18,19 @@ export class OrderService {
       .set('accept', '*/*');
   }
 
-  async getOrders(): Promise<any> {
+  getOrders(): Observable<PlacedPizzaOrder[]> {
     const orderUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.orders;
-    return this.httpClient.get<any>(orderUrl).toPromise().catch(error => { throw error; });
+    return this.httpClient.get<PlacedPizzaOrder[]>(orderUrl);
   }
 
-  async postOrder(orderForm: any): Promise<any> {
+  postOrder(orderForm: any): Observable<any> {
     const postOrderUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.orders;
-    return this.httpClient.post<any>(postOrderUrl,orderForm, {'headers': this.setHttpHeader()})
-      .toPromise().catch(error => {throw error;});
+    return this.httpClient.post<any>(postOrderUrl,orderForm, {'headers': this.setHttpHeader()});
   }
 
-  deleteOrder(orderID: number): Promise<any> {
+  deleteOrder(orderID: number): Observable<any> {
     const orderUrl = environment.apiMap.BASE_API_URL + ApiEndpoints.orders + '/' + orderID;
-    return this.httpClient.delete<any>(orderUrl).toPromise().catch(error => { throw error; });
+    return this.httpClient.delete<any>(orderUrl);
   }
 
 }
